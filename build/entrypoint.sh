@@ -2,9 +2,29 @@
 
 set -ex
 
-if [[ "${1:0:1}" = '-' ]]; then
-	set -- dontstarvetogether "$@"
+# Use the `steamcmd` command if only options were given.
+# if [ "${1:0:1}" = '+' ]; then
+#   set -- steamcmd "$@"
+# fi
+
+# Handle running the steamcmd command.
+if [ "$1" = "steamcmd" ]; then
+  set -- gosu "$STEAM_USER" "$@"
 fi
+
+# Use the `dontstarve_dedicated_server_nullrenderer` command if only options were given.
+# if [ "${1:0:1}" = '-' ]; then
+# 	set -- dontstarve_dedicated_server_nullrenderer "$@"
+# fi
+
+# Handle running the `dontstarve_dedicated_server_nullrenderer` command.
+if [ "$1" = "dontstarve_dedicated_server_nullrenderer" ]; then
+	set -- gosu "$STEAM_USER" "$@"
+fi
+
+# if [[ "${1:0:1}" = '-' ]]; then
+# 	set -- dontstarvetogether "$@"
+# fi
 
 if [[ "$1" = 'dontstarvetogether' ]]; then
 	mkdir -p "$STORAGE_PATH/$CLUSTER_NAME/$SHARD_NAME"
